@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kuro Sushi — суші-бар і доставка</title>
+<meta name="description" content="Роли, сети й гаряче. Замовлення онлайн, доставка за 45 хвилин.">
+<style>
+:root{--bg:#0b0716;--pk:#ff2e9a;--cy:#19e3ff;--tx:#efeaff;--mut:#9a90b8;--card:#150e29}
+*{box-sizing:border-box;margin:0}
+body{background:radial-gradient(circle at 80% -10%,#2a0f4a,transparent 45%),var(--bg);color:var(--tx);font:16px/1.55 "Trebuchet MS",Verdana,sans-serif;padding-bottom:80px}
+:focus-visible{outline:3px solid var(--cy);outline-offset:2px}
+.w{max-width:960px;margin:0 auto;padding:0 20px}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.logo{font:700 22px inherit;letter-spacing:4px;color:var(--cy);text-shadow:0 0 10px var(--cy)}
+header span{color:var(--mut);font-size:14px}
+.hero{text-align:center;padding:50px 0 30px}
+.sign{font:900 clamp(56px,15vw,150px)/1 "Arial Black",Impact,sans-serif;letter-spacing:6px;color:#fff;text-shadow:0 0 8px var(--pk),0 0 24px var(--pk),0 0 60px var(--pk);animation:fl 5s infinite}
+@keyframes fl{0%,92%,100%{opacity:1}93%{opacity:.5}95%{opacity:1}97%{opacity:.6}}
+.hero p{color:var(--mut);margin:14px auto 0;max-width:42ch}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:34px 0 18px}
+.tabs button{background:none;border:1px solid var(--cy);color:var(--cy);padding:9px 20px;border-radius:30px;font:inherit;cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--cy);color:#0b0716;box-shadow:0 0 18px var(--cy)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.it{background:var(--card);border:1px solid #3a2a63;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:6px;transition:.2s}
+.it:hover{border-color:var(--pk);box-shadow:0 0 20px rgba(255,46,154,.35)}
+.it h3{font-size:19px}
+.it p{color:var(--mut);font-size:14px;flex:1}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.row b{color:var(--pk);font-size:19px;text-shadow:0 0 10px rgba(255,46,154,.6)}
+.add{background:var(--pk);color:#fff;border:0;border-radius:30px;padding:8px 18px;font:inherit;cursor:pointer}
+.add:hover{box-shadow:0 0 16px var(--pk)}
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:50px}
+.info div{border-left:2px solid var(--cy);padding-left:14px;color:var(--mut)}
+.info b{color:var(--cy);display:block}
+#bar{position:fixed;left:0;right:0;bottom:0;background:#150e29ee;border-top:1px solid var(--pk);padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;backdrop-filter:blur(6px)}
+#bar button{background:var(--cy);color:#0b0716;border:0;padding:11px 24px;border-radius:30px;font:700 16px inherit;cursor:pointer}
+footer{margin:40px 0;color:var(--mut);font-size:13px}
+@media(prefers-reduced-motion:reduce){.sign{animation:none}}
+</style>
+</head>
+<body>
+<div class="w">
+<header><span class="logo">KURO SUSHI</span><span>щодня 11:00–23:00</span></header>
+<section class="hero"><div class="sign">KURO</div><p>Суші-бар у світлі неону. Рис готуємо щоранку, рибу беремо свіжою, а доставка не затримується довше 45 хвилин.</p></section>
+<div class="tabs" id="tabs" role="group" aria-label="Категорії"></div>
+<div class="grid" id="grid"></div>
+<div class="info"><div><b>Доставка</b>45 хвилин по місту, безкоштовно від 600 грн</div><div><b>Самовивіз</b>Знижка 10% на все меню</div><div><b>Оплата</b>Карткою онлайн або при отриманні</div></div>
+<footer>Kuro Sushi · вул. Прикладна, 3 · Демо-проєкт, дані вигадані</footer>
+</div>
+<div id="bar"><span id="sum">Кошик порожній</span><button id="go">Оформити</button></div>
+<script>
+const M=[
+['Роли','Філадельфія','Лосось, крем-сир, огірок, 8 шт.',290],['Роли','Каліфорнія','Краб, авокадо, ікра масаго, 8 шт.',250],['Роли','Дракон','Вугор, авокадо, соус унагі, 8 шт.',340],['Роли','Спайсі тунець','Тунець, спайсі-соус, 8 шт.',310],
+['Сети','Кура мікс','32 шт.: Філадельфія, Каліфорнія, Дракон, Бонсай',890],['Сети','Для двох','24 шт. і місо-суп',690],['Сети','Вечірка','64 шт. для компанії 4–5 осіб',1590],
+['Гаряче','Рамен зі свининою','Бульйон 12 годин, яйце, норі',260],['Гаряче','Удон з куркою','Овочі, соус теріякі',230],['Гаряче','Гедза, 6 шт.','Свинина, імбир',180],
+['Напої','Матча-лате','Теплий або холодний',110],['Напої','Лимонад «Юдзу»','Цитрус, м’ята',95]];
+const cats=[...new Set(M.map(x=>x[0]))];let cur=cats[0],cart={};const $=id=>document.getElementById(id);
+function tabs(){$('tabs').innerHTML=cats.map(c=>`<button aria-pressed="${c===cur}" data-c="${c}">${c}</button>`).join('')}
+function grid(){$('grid').innerHTML=M.map((x,i)=>({x,i})).filter(o=>o.x[0]===cur).map(o=>`<div class="it"><h3>${o.x[1]}</h3><p>${o.x[2]}</p><div class="row"><b>${o.x[3]} грн</b><button class="add" data-i="${o.i}">Додати</button></div></div>`).join('')}
+function bar(){const ids=Object.keys(cart),n=ids.reduce((s,i)=>s+cart[i],0),t=ids.reduce((s,i)=>s+cart[i]*M[i][3],0);$('sum').textContent=n?n+' поз. · '+t+' грн':'Кошик порожній'}
+document.addEventListener('click',e=>{const t=e.target;if(t.dataset.c){cur=t.dataset.c;tabs();grid()}if(t.dataset.i){cart[t.dataset.i]=(cart[t.dataset.i]||0)+1;bar()}});
+$('go').onclick=()=>alert(Object.keys(cart).length?'Це демо: замовлення не оформлюється.':'Додайте щось із меню.');
+tabs();grid();bar();
+</script>
+</body>
+</html>
